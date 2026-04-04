@@ -30,7 +30,16 @@
 						/>
 						<div class="min-w-0 flex-1">
 							<p class="truncate text-sm text-white">{item.titulo}</p>
-							<p class="text-sm text-[#8696a0]">ARS {item.precio.toLocaleString('es-AR')}</p>
+							{#if item.precio_oferta > 0}
+								<p class="text-xs text-[#8696a0] line-through">
+									ARS {item.precio.toLocaleString('es-AR')}
+								</p>
+								<p class="text-sm font-semibold text-[#00a884]">
+									ARS {item.precio_oferta.toLocaleString('es-AR')}
+								</p>
+							{:else}
+								<p class="text-sm text-[#8696a0]">ARS {item.precio.toLocaleString('es-AR')}</p>
+							{/if}
 							<div class="mt-1 flex items-center gap-2">
 								<button
 									onclick={() => updateQuantity(item.id, item.quantity - 1)}

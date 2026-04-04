@@ -1,9 +1,9 @@
 <script>
-	import { addToCart } from '$lib/stores/cart.js';
-	import { cartCount } from '$lib/stores/cart.js';
-
+	import { addToCart, cartCount } from '$lib/stores/cart.js';
+	import Cart from '$lib/components/Cart.svelte';
 	let { data } = $props();
 	const product = data.product;
+	let cartOpen = $state(false);
 </script>
 
 <div class="mx-auto flex min-h-screen max-w-5xl flex-col bg-[#111b21]">
@@ -21,7 +21,7 @@
 			</svg>
 		</a>
 		<div class="flex items-center gap-4 text-[#aebac1]">
-			<div class="relative">
+			<button onclick={() => (cartOpen = true)} class="relative">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-6 w-6"
@@ -43,7 +43,7 @@
 						{$cartCount}
 					</span>
 				{/if}
-			</div>
+			</button>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				class="h-6 w-6"
@@ -61,29 +61,31 @@
 		</div>
 	</div>
 
-	<!-- Layout desktop: imagen izquierda, info derecha -->
+	<!-- Layout desktop -->
 	<div class="flex flex-1 flex-col lg:flex-row">
-		<!-- Product image -->
 		<div class="aspect-square w-full overflow-hidden bg-[#1f2c34] lg:w-1/2">
 			<img src={product.media} alt={product.titulo} class="h-full w-full object-cover" />
 		</div>
-
-		<!-- Product info -->
 		<div class="flex w-full flex-col justify-between p-6 lg:w-1/2">
 			<div>
 				<h1 class="text-xl leading-snug font-semibold text-white">{product.titulo}</h1>
-				<p class="mt-2 text-lg text-[#8696a0]">ARS {product.precio.toLocaleString('es-AR')}</p>
-
+				{#if product.precio_oferta > 0}
+					<p class="mt-2 text-[#8696a0] line-through">
+						ARS {product.precio.toLocaleString('es-AR')}
+					</p>
+					<p class="text-lg font-semibold text-[#00a884]">
+						ARS {product.precio_oferta.toLocaleString('es-AR')}
+					</p>
+				{:else}
+					<p class="mt-2 text-lg text-[#8696a0]">ARS {product.precio.toLocaleString('es-AR')}</p>
+				{/if}
 				<button
 					class="mt-6 w-full rounded-full border border-[#00a884] py-3 font-medium text-[#00a884] transition-colors hover:bg-[#00a884]/10"
 				>
 					Enviar mensaje a la empresa
 				</button>
-
 				<p class="mt-6 text-sm text-[#8696a0]">Info. de la empresa</p>
 			</div>
-
-			<!-- Footer -->
 			<div class="mt-8">
 				<button
 					onclick={() => addToCart(product)}
@@ -95,3 +97,7 @@
 		</div>
 	</div>
 </div>
+
+{#if cartOpen}
+	<Cart onClose={() => (cartOpen = false)} />
+{/if}

@@ -7,16 +7,17 @@ export const cartCount = derived(cart, ($cart) =>
 );
 
 export const cartTotal = derived(cart, ($cart) =>
-	$cart.reduce((acc, item) => acc + item.precio * item.quantity, 0)
+	$cart.reduce((acc, item) => acc + item.finalPrice * item.quantity, 0)
 );
 
 export function addToCart(product) {
+	const price = product.precio_oferta > 0 ? product.precio_oferta : product.precio;
 	cart.update((items) => {
 		const existing = items.find((i) => i.id === product.id);
 		if (existing) {
 			return items.map((i) => (i.id === product.id ? { ...i, quantity: i.quantity + 1 } : i));
 		}
-		return [...items, { ...product, quantity: 1 }];
+		return [...items, { ...product, finalPrice: price, quantity: 1 }];
 	});
 }
 

@@ -2,6 +2,8 @@
 	import { addToCart } from '$lib/stores/cart.js';
 
 	let { image = '', name = '', price = 0, product = {} } = $props();
+
+	const hasOffer = product.precio_oferta > 0;
 </script>
 
 <a
@@ -12,7 +14,14 @@
 
 	<div class="min-w-0 flex-1">
 		<p class="truncate text-sm font-medium text-white">{name}</p>
-		<p class="mt-1 text-sm text-[#8696a0]">ARS {price.toLocaleString('es-AR')}</p>
+		{#if hasOffer}
+			<p class="text-xs text-[#8696a0] line-through">ARS {price.toLocaleString('es-AR')}</p>
+			<p class="text-sm font-semibold text-[#00a884]">
+				ARS {product.precio_oferta.toLocaleString('es-AR')}
+			</p>
+		{:else}
+			<p class="mt-1 text-sm text-[#8696a0]">ARS {price.toLocaleString('es-AR')}</p>
+		{/if}
 	</div>
 
 	<button
