@@ -1,9 +1,7 @@
 <script>
 	import { addToCart } from '$lib/stores/cart.js';
-
 	let { image = '', name = '', price = 0, product = {} } = $props();
-
-	const hasOffer = product.precio_oferta > 0;
+	const hasOffer = $derived(product.precio_oferta > 0);
 </script>
 
 <a

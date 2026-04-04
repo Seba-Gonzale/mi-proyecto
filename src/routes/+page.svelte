@@ -11,10 +11,37 @@
 	const allProducts = Object.values(data.catalog.catalogo);
 	let filtered = $state(allProducts);
 	let cartOpen = $state(false);
+	let currentQuery = $state('');
+	let currentSort = $state('default');
+
+	function applyFilters() {
+		let result = allProducts.filter((p) =>
+			p.titulo.toLowerCase().includes(currentQuery.toLowerCase().trim())
+		);
+
+		if (currentSort === 'offers') {
+			result = result.filter((p) => p.precio_oferta > 0);
+		} else if (currentSort === 'asc') {
+			result = result.sort((a, b) => (a.precio_oferta || a.precio) - (b.precio_oferta || b.precio));
+		} else if (currentSort === 'desc') {
+			result = result.sort((a, b) => (b.precio_oferta || b.precio) - (a.precio_oferta || a.precio));
+		} else if (currentSort === 'az') {
+			result = result.sort((a, b) => a.titulo.localeCompare(b.titulo));
+		} else if (currentSort === 'za') {
+			result = result.sort((a, b) => b.titulo.localeCompare(a.titulo));
+		}
+
+		filtered = result;
+	}
 
 	function handleSearch(query) {
-		const q = query.toLowerCase().trim();
-		filtered = q ? allProducts.filter((p) => p.titulo.toLowerCase().includes(q)) : allProducts;
+		currentQuery = query;
+		applyFilters();
+	}
+
+	function handleSort(sort) {
+		currentSort = sort;
+		applyFilters();
 	}
 </script>
 
@@ -26,7 +53,7 @@
 		url="https://ricoysaludable.jarbas.net..."
 		coverImage="https://placehold.co/400x128"
 	/>
-	<SearchBar onSearch={handleSearch} />
+	<SearchBar onSearch={handleSearch} onSort={handleSort} />
 
 	<div class="grid grid-cols-1 gap-2 p-2 sm:grid-cols-2 lg:grid-cols-3">
 		{#each filtered as product}

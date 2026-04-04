@@ -1,15 +1,21 @@
 <script>
-	let { onSearch } = $props();
+	let { onSearch, onSort } = $props();
 	let query = $state('');
+	let sort = $state('default');
 
 	function handleInput(e) {
 		query = e.target.value;
 		onSearch(query);
 	}
+
+	function handleSort(e) {
+		sort = e.target.value;
+		onSort(sort);
+	}
 </script>
 
-<div class="px-2 py-3">
-	<div class="flex items-center gap-2 rounded-lg bg-[#2a3942] px-3 py-2">
+<div class="flex flex-col gap-2 px-2 py-3 sm:flex-row">
+	<div class="flex flex-1 items-center gap-2 rounded-lg bg-[#2a3942] px-3 py-2">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			class="h-5 w-5 flex-shrink-0 text-[#8696a0]"
@@ -32,4 +38,17 @@
 			class="w-full bg-transparent text-sm text-white placeholder-[#8696a0] outline-none"
 		/>
 	</div>
+
+	<select
+		value={sort}
+		onchange={handleSort}
+		class="cursor-pointer rounded-lg bg-[#2a3942] px-3 py-2 text-sm text-[#8696a0] outline-none"
+	>
+		<option value="default">Ordenar</option>
+		<option value="asc">Precio: menor a mayor</option>
+		<option value="desc">Precio: mayor a menor</option>
+		<option value="offers">Solo ofertas</option>
+		<option value="az">Alfabético A-Z</option>
+		<option value="za">Alfabético Z-A</option>
+	</select>
 </div>
