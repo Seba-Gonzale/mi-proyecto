@@ -2,7 +2,7 @@
 	let { cartCount = 0, onCartClick } = $props();
 </script>
 
-<div class="flex items-center justify-between bg-[#1f2c34] px-4 py-3">
+<div class="sticky top-0 z-40 flex items-center justify-between bg-[#1f2c34] px-4 py-3">
 	<!-- Left: back arrow + title -->
 	<div class="flex items-center gap-3">
 		<button class="text-[#aebac1]">

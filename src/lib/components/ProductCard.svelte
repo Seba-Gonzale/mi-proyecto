@@ -27,8 +27,8 @@
 			e.preventDefault();
 			addToCart(product);
 		}}
-		class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#2a3942] transition-colors hover:bg-[#00a884]"
+		class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#2a3942] transition-colors hover:bg-[#00a884]"
 	>
-		<span class="text-xl leading-none text-[#00a884] hover:text-white">+</span>
+		<span class="text-2xl leading-none text-[#00a884] hover:text-white">+</span>
 	</button>
 </a>

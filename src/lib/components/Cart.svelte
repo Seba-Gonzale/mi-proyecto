@@ -13,7 +13,11 @@
 		<!-- Header -->
 		<div class="flex items-center justify-between bg-[#1f2c34] px-4 py-3">
 			<h2 class="text-lg font-semibold text-white">Carrito</h2>
-			<button onclick={onClose} class="text-2xl leading-none text-[#8696a0]">&times;</button>
+			<button
+				onclick={onClose}
+				class="flex h-10 w-10 items-center justify-center text-4xl leading-none text-[#8696a0] transition-colors hover:text-white"
+				>&times;</button
+			>
 		</div>
 
 		<!-- Items -->
@@ -43,18 +47,19 @@
 							<div class="mt-1 flex items-center gap-2">
 								<button
 									onclick={() => updateQuantity(item.id, item.quantity - 1)}
-									class="flex h-6 w-6 items-center justify-center text-lg text-[#00a884]">−</button
+									class="flex h-8 w-8 items-center justify-center text-2xl text-[#00a884]">−</button
 								>
 								<span class="text-sm text-white">{item.quantity}</span>
 								<button
 									onclick={() => updateQuantity(item.id, item.quantity + 1)}
-									class="flex h-6 w-6 items-center justify-center text-lg text-[#00a884]">+</button
+									class="flex h-8 w-8 items-center justify-center text-2xl text-[#00a884]">+</button
 								>
 							</div>
 						</div>
 						<button
 							onclick={() => removeFromCart(item.id)}
-							class="text-xl text-[#8696a0] hover:text-red-400">&times;</button
+							class="flex h-8 w-8 items-center justify-center text-3xl text-[#8696a0] hover:text-red-400"
+							>&times;</button
 						>
 					</div>
 				{/each}
