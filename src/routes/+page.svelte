@@ -2,7 +2,10 @@
 	import TopBar from '$lib/components/TopBar.svelte';
 	import CatalogHeader from '$lib/components/CatalogHeader.svelte';
 	import ProductCard from '$lib/components/ProductCard.svelte';
-	import { getCatalog } from '$lib/services/catalog.js';
+
+	let { data } = $props();
+
+	const products = Object.values(data.catalog.catalogo);
 </script>
 
 <div class="mx-auto min-h-screen max-w-5xl bg-[#111b21]">
@@ -14,11 +17,9 @@
 		coverImage="https://placehold.co/400x128"
 	/>
 
-	{#await getCatalog()}
-		<p class="py-8 text-center text-[#8696a0]">Cargando productos...</p>
-	{:then data}
-		<pre class="p-4 text-xs text-white">{JSON.stringify(data, null, 2)}</pre>
-	{:catch error}
-		<p class="py-8 text-center text-red-400">{error.message}</p>
-	{/await}
+	<div class="mt-2 grid grid-cols-1 gap-2 p-2 sm:grid-cols-2 lg:grid-cols-3">
+		{#each products as product}
+			<ProductCard name={product.titulo} price={product.precio} image={product.media} />
+		{/each}
+	</div>
 </div>
