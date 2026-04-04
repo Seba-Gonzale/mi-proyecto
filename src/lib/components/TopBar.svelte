@@ -1,9 +1,8 @@
 <script>
-	let { cartCount = 0, onCartClick } = $props();
+	let { cartCount = 0, onCartClick, onSearchClick } = $props();
 </script>
 
 <div class="sticky top-0 z-40 flex items-center justify-between bg-[#1f2c34] px-4 py-3">
-	<!-- Left: back arrow + title -->
 	<div class="flex items-center gap-3">
 		<button class="text-[#aebac1]">
 			<svg
@@ -19,8 +18,23 @@
 		<span class="text-lg font-medium text-white">Catálogo</span>
 	</div>
 
-	<!-- Right: cart + link icons -->
 	<div class="flex items-center gap-4">
+		<button onclick={onSearchClick} class="text-[#aebac1]">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="h-6 w-6"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke="currentColor"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"
+				/>
+			</svg>
+		</button>
 		<button onclick={onCartClick} class="relative text-[#aebac1]">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

@@ -5,7 +5,7 @@
 <div class="relative">
 	<!-- Cover image -->
 	<div class="h-32 w-full overflow-hidden bg-[#1f2c34] sm:h-48">
-		<img src={coverImage} alt={storeName} class="h-full w-full object-cover opacity-60" />
+		<img src={coverImage} alt={storeName} class="h-full w-full object-cover" />
 	</div>
 
 	<!-- Store info -->
