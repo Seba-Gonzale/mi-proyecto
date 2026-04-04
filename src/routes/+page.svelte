@@ -5,6 +5,7 @@
 	import SearchBar from '$lib/components/SearchBar.svelte';
 	import Cart from '$lib/components/Cart.svelte';
 	import { cartCount } from '$lib/stores/cart.js';
+	import { browser } from '$app/environment';
 
 	let { data } = $props();
 
@@ -13,6 +14,38 @@
 	let cartOpen = $state(false);
 	let currentQuery = $state('');
 	let currentSort = $state('default');
+
+	function openCart() {
+		cartOpen = true;
+		if (browser) history.pushState({ cart: true }, '');
+	}
+
+	function closeCart() {
+		cartOpen = false;
+	}
+
+	if (browser) {
+		// pushState inicial para tener historial
+		history.pushState({ page: 'catalog' }, '');
+
+		window.addEventListener('popstate', (e) => {
+			if (cartOpen) {
+				cartOpen = false;
+				history.pushState({ page: 'catalog' }, '');
+			} else {
+				const confirm = window.confirm('¿Deseas salir de Rico y Saludable?');
+				if (confirm) {
+					history.back();
+				} else {
+					history.pushState({ page: 'catalog' }, '');
+				}
+			}
+		});
+
+		window.addEventListener('beforeunload', (e) => {
+			e.preventDefault();
+		});
+	}
 
 	function applyFilters() {
 		let result = allProducts.filter((p) =>
@@ -46,7 +79,7 @@
 </script>
 
 <div class="mx-auto min-h-screen max-w-5xl bg-[#111b21]">
-	<TopBar cartCount={$cartCount} onCartClick={() => (cartOpen = true)} />
+	<TopBar cartCount={$cartCount} onCartClick={openCart} />
 	<CatalogHeader
 		storeName="Rico y Saludable"
 		description="Podes ver los productos y hacer tu pedido en nuestra página:"
@@ -65,5 +98,5 @@
 </div>
 
 {#if cartOpen}
-	<Cart onClose={() => (cartOpen = false)} />
+	<Cart onClose={closeCart} />
 {/if}
