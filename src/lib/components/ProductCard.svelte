@@ -8,7 +8,12 @@
 	href="/producto/{product.id}"
 	class="flex items-center gap-3 rounded-lg bg-[#1f2c34] p-3 transition-colors hover:bg-[#2a3942]"
 >
-	<img src={image} alt={name} class="h-16 w-16 flex-shrink-0 rounded-md object-cover" />
+	<img
+		src={image}
+		alt={name}
+		loading="lazy"
+		class="h-16 w-16 flex-shrink-0 rounded-md bg-[#2a3942] object-cover"
+	/>
 
 	<div class="min-w-0 flex-1">
 		<p class="truncate text-sm font-medium text-white">{name}</p>

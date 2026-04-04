@@ -64,7 +64,12 @@
 	<!-- Layout desktop -->
 	<div class="flex flex-1 flex-col lg:flex-row">
 		<div class="aspect-square w-full overflow-hidden bg-[#1f2c34] lg:w-1/2">
-			<img src={product.media} alt={product.titulo} class="h-full w-full object-cover" />
+			<img
+				src={product.media}
+				alt={product.titulo}
+				loading="lazy"
+				class="h-full w-full bg-[#2a3942] object-cover"
+			/>
 		</div>
 		<div class="flex w-full flex-col justify-between p-6 lg:w-1/2">
 			<div>
