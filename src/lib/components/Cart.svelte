@@ -4,22 +4,14 @@
 	let { onClose } = $props();
 </script>
 
-<div class="fixed inset-0 z-50 flex justify-end">
+<div class="fixed inset-0 z-50 flex flex-col">
 	<!-- Overlay -->
 	<button class="absolute inset-0 bg-black/60" onclick={onClose}></button>
 
 	<!-- Panel -->
-	<div class="relative flex h-full w-full max-w-sm flex-col bg-[#111b21]">
-		<!-- Header -->
-		<div class="flex items-center justify-between bg-[#1f2c34] px-4 py-3">
-			<h2 class="text-lg font-semibold text-white">Carrito</h2>
-			<button
-				onclick={onClose}
-				class="flex h-10 w-10 items-center justify-center text-4xl leading-none text-[#8696a0] transition-colors hover:text-white"
-				>&times;</button
-			>
-		</div>
-
+	<div
+		class="fixed inset-x-0 bottom-0 z-50 mx-auto flex h-[90vh] w-full max-w-5xl flex-col bg-[#111b21]"
+	>
 		<!-- Items -->
 		<div class="flex flex-1 flex-col gap-3 overflow-y-auto p-3">
 			{#if $cart.length === 0}
@@ -66,7 +58,7 @@
 			{/if}
 		</div>
 
-		<!-- Footer -->
+		<!-- Total + Confirmar -->
 		{#if $cart.length > 0}
 			<div class="border-t border-[#2a3942] bg-[#1f2c34] p-4">
 				<div class="mb-3 flex justify-between">
@@ -93,5 +85,17 @@
 				</button>
 			</div>
 		{/if}
+
+		<!-- TopBar inferior -->
+		<div
+			class="flex items-center justify-between border-t-2 border-[#00a884] bg-[#1f2c34] px-4 py-3"
+		>
+			<h2 class="text-lg font-semibold text-white">Carrito</h2>
+			<button
+				onclick={onClose}
+				class="flex h-10 w-10 items-center justify-center text-4xl text-[#8696a0] transition-colors hover:text-white"
+				>&times;</button
+			>
+		</div>
 	</div>
 </div>

@@ -1,40 +1,87 @@
 <script>
-	let { cartCount = 0, onCartClick, onSearchClick } = $props();
+	import { searchQuery } from '$lib/stores/ui.js';
+	let {
+		cartCount = 0,
+		onCartClick,
+		onSearchClick,
+		searchOpen = false,
+		isDetail = false,
+		onBack
+	} = $props();
+	let query = $state('');
+
+	function handleInput(e) {
+		query = e.target.value;
+		searchQuery.set(query);
+	}
+
+	function handleClear() {
+		if (query.length > 0) {
+			query = '';
+			searchQuery.set('');
+		} else {
+			onSearchClick();
+		}
+	}
 </script>
 
-<div class="sticky top-0 z-40 flex items-center justify-between bg-[#1f2c34] px-4 py-3">
-	<div class="flex items-center gap-3">
-		<button class="text-[#aebac1]">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="h-6 w-6"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
-			>
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-			</svg>
-		</button>
-		<span class="text-lg font-medium text-white">Catálogo</span>
-	</div>
+<div
+	class="fixed bottom-0 z-40 flex min-h-[60px] w-full max-w-5xl items-center justify-between border-t-2 border-[#00a884] bg-[#1f2c34] px-4 py-4"
+>
+	{#if searchOpen}
+		<div class="flex flex-1 items-center gap-2">
+			<input
+				type="text"
+				placeholder="Buscar productos..."
+				value={query}
+				oninput={handleInput}
+				autofocus
+				class="flex-1 bg-transparent text-sm text-white placeholder-[#8696a0] outline-none"
+			/>
+		</div>
+	{:else}
+		<span class="text-lg font-medium text-white">
+			{isDetail ? 'Detalle' : 'Catálogo'}
+		</span>
+	{/if}
 
-	<div class="flex items-center gap-4">
-		<button onclick={onSearchClick} class="text-[#aebac1]">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="h-6 w-6"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"
-				/>
-			</svg>
-		</button>
+	<div class="flex flex-shrink-0 items-center gap-4">
+		{#if !isDetail}
+			<button onclick={handleClear} class="text-[#aebac1]">
+				{#if searchOpen}
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="h-6 w-6"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M6 18L18 6M6 6l12 12"
+						/>
+					</svg>
+				{:else}
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="h-6 w-6"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"
+						/>
+					</svg>
+				{/if}
+			</button>
+		{/if}
+
 		<button onclick={onCartClick} class="relative text-[#aebac1]">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +105,8 @@
 				</span>
 			{/if}
 		</button>
-		<button class="text-[#aebac1]">
+
+		<button onclick={onBack} class="text-[#aebac1]">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				class="h-6 w-6"
@@ -66,12 +114,7 @@
 				viewBox="0 0 24 24"
 				stroke="currentColor"
 			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-				/>
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
 			</svg>
 		</button>
 	</div>

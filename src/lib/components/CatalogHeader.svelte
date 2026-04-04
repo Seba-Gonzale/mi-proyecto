@@ -4,9 +4,9 @@
 
 <div class="relative">
 	<!-- Cover image -->
-	<div class="h-32 w-full overflow-hidden bg-[#1f2c34] sm:h-48">
-		<img src={coverImage} alt={storeName} class="h-full w-full object-cover" />
-	</div>
+	<div class="w-full overflow-hidden bg-[#1f2c34]">
+  <img src={coverImage} alt={storeName} class="w-full" />
+</div>
 
 	<!-- Store info -->
 	<div class="bg-[#111b21] px-4 py-3 sm:px-8 sm:py-5">

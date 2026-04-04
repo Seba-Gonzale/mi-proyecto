@@ -1,20 +1,17 @@
 <script>
-	import { addToCart } from '$lib/stores/cart.js';
+	import { addToCart, removeFromCart, updateQuantity, cart } from '$lib/stores/cart.js';
+	import { derived } from 'svelte/store';
+
 	let { image = '', name = '', price = 0, product = {} } = $props();
 	const hasOffer = $derived(product.precio_oferta > 0);
+
+	const cartItem = derived(cart, ($cart) => $cart.find((i) => i.id === product.id));
 </script>
 
 <a
 	href="/producto/{product.id}"
 	class="flex items-center gap-3 rounded-lg bg-[#1f2c34] p-3 transition-colors hover:bg-[#2a3942]"
 >
-	<img
-		src={image}
-		alt={name}
-		loading="lazy"
-		class="h-16 w-16 flex-shrink-0 rounded-md bg-[#2a3942] object-cover"
-	/>
-
 	<div class="min-w-0 flex-1">
 		<p class="truncate text-sm font-medium text-white">{name}</p>
 		{#if hasOffer}
@@ -27,13 +24,44 @@
 		{/if}
 	</div>
 
-	<button
-		onclick={(e) => {
-			e.preventDefault();
-			addToCart(product);
-		}}
-		class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#2a3942] transition-colors hover:bg-[#00a884]"
-	>
-		<span class="text-2xl leading-none text-[#00a884] hover:text-white">+</span>
-	</button>
+	<div class="flex flex-shrink-0 items-center gap-2">
+		{#if $cartItem}
+			<button
+				onclick={(e) => {
+					e.preventDefault();
+					updateQuantity(product.id, $cartItem.quantity - 1);
+				}}
+				class="flex h-8 w-8 items-center justify-center rounded-full bg-red-900/60 transition-colors hover:bg-red-700"
+			>
+				<span class="text-xl leading-none text-white">−</span>
+			</button>
+		{/if}
+
+		<button
+			onclick={(e) => {
+				e.preventDefault();
+				addToCart(product);
+			}}
+			class="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg"
+		>
+			<img
+				src={image}
+				alt={name}
+				loading="lazy"
+				class="h-full w-full bg-[#2a3942] object-cover transition-opacity"
+				style="opacity: {$cartItem ? '0.4' : '1'}"
+			/>
+			{#if $cartItem}
+				<div class="absolute inset-0 flex items-center justify-center">
+					<span class="text-2xl font-bold text-white">{$cartItem.quantity}</span>
+				</div>
+			{:else}
+				<div
+					class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity hover:opacity-100"
+				>
+					<span class="text-3xl text-white">+</span>
+				</div>
+			{/if}
+		</button>
+	</div>
 </a>
