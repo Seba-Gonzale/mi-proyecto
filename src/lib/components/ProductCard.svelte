@@ -1,16 +1,20 @@
 <script>
-  let { image = '', name = '', price = '' } = $props();
+	let { image = '', name = '', price = 0, product = {} } = $props();
+	import { addToCart } from '$lib/stores/cart.js';
 </script>
 
-<div class="flex items-center gap-3 bg-[#1f2c34] p-3 rounded-lg">
-  <img src={image} alt={name} class="w-16 h-16 rounded-md object-cover flex-shrink-0" />
+<div class="flex items-center gap-3 rounded-lg bg-[#1f2c34] p-3">
+	<img src={image} alt={name} class="h-16 w-16 flex-shrink-0 rounded-md object-cover" />
 
-  <div class="flex-1 min-w-0">
-    <p class="text-white text-sm font-medium truncate">{name}</p>
-    <p class="text-[#8696a0] text-sm mt-1">ARS {price}</p>
-  </div>
+	<div class="min-w-0 flex-1">
+		<p class="truncate text-sm font-medium text-white">{name}</p>
+		<p class="mt-1 text-sm text-[#8696a0]">ARS {price.toLocaleString('es-AR')}</p>
+	</div>
 
-  <button class="w-8 h-8 rounded-full bg-[#2a3942] flex items-center justify-center flex-shrink-0">
-    <span class="text-[#00a884] text-xl leading-none">+</span>
-  </button>
+	<button
+		onclick={() => addToCart(product)}
+		class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#2a3942] transition-colors hover:bg-[#00a884]"
+	>
+		<span class="text-xl leading-none text-[#00a884] hover:text-white">+</span>
+	</button>
 </div>
