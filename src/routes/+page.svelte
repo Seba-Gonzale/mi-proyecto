@@ -2,10 +2,17 @@
 	import TopBar from '$lib/components/TopBar.svelte';
 	import CatalogHeader from '$lib/components/CatalogHeader.svelte';
 	import ProductCard from '$lib/components/ProductCard.svelte';
+	import SearchBar from '$lib/components/SearchBar.svelte';
 
 	let { data } = $props();
 
-	const products = Object.values(data.catalog.catalogo);
+	const allProducts = Object.values(data.catalog.catalogo);
+	let filtered = $state(allProducts);
+
+	function handleSearch(query) {
+		const q = query.toLowerCase().trim();
+		filtered = q ? allProducts.filter((p) => p.titulo.toLowerCase().includes(q)) : allProducts;
+	}
 </script>
 
 <div class="mx-auto min-h-screen max-w-5xl bg-[#111b21]">
@@ -16,10 +23,13 @@
 		url="https://ricoysaludable.jarbas.net..."
 		coverImage="https://placehold.co/400x128"
 	/>
+	<SearchBar onSearch={handleSearch} />
 
-	<div class="mt-2 grid grid-cols-1 gap-2 p-2 sm:grid-cols-2 lg:grid-cols-3">
-		{#each products as product}
+	<div class="grid grid-cols-1 gap-2 p-2 sm:grid-cols-2 lg:grid-cols-3">
+		{#each filtered as product}
 			<ProductCard name={product.titulo} price={product.precio} image={product.media} />
+		{:else}
+			<p class="text-[#8696a0] text-center py-8 col-span-3">No se encontraron productos.</p>
 		{/each}
 	</div>
 </div>
