@@ -69,9 +69,22 @@
 					<span class="font-bold text-white">ARS {$cartTotal.toLocaleString('es-AR')}</span>
 				</div>
 				<button
+					onclick={() => {
+						const lines = $cart
+							.map(
+								(item) =>
+									`x${item.quantity} - ${item.titulo} — ARS ${(item.finalPrice * item.quantity).toLocaleString('es-AR')}`
+							)
+							.join('\n');
+						const total = `\nTotal: ARS ${$cartTotal.toLocaleString('es-AR')}`;
+						const msg = encodeURIComponent(
+							`Hola! Me gustaría hacer el siguiente pedido:\n\n${lines}${total}`
+						);
+						window.open(`https://wa.me/5493794229358?text=${msg}`, '_blank');
+					}}
 					class="w-full rounded-lg bg-[#00a884] py-3 font-semibold text-white transition-colors hover:bg-[#008f6f]"
 				>
-					Confirmar pedido
+					Confirmar pedido por WhatsApp
 				</button>
 			</div>
 		{/if}
