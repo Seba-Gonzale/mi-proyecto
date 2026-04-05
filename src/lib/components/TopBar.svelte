@@ -26,7 +26,7 @@
 </script>
 
 <div
-	class="fixed bottom-0 z-40 flex min-h-[60px] w-full max-w-5xl items-center justify-between border-t-2 border-[#00a884] bg-[#1f2c34] px-4 py-4"
+	class="fixed bottom-0 z-40 flex min-h-15 w-full max-w-5xl items-center justify-between border-t-2 border-[#00a884] bg-[#1f2c34] px-4 py-4"
 >
 	{#if searchOpen}
 		<div class="flex flex-1 items-center gap-2">
@@ -45,7 +45,7 @@
 		</span>
 	{/if}
 
-	<div class="flex flex-shrink-0 items-center gap-4">
+	<div class="flex shrink-0 items-center gap-6">
 		{#if !isDetail}
 			<button onclick={handleClear} class="text-[#aebac1]">
 				{#if searchOpen}
@@ -99,7 +99,7 @@
 			</svg>
 			{#if cartCount > 0}
 				<span
-					class="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#00a884] text-xs text-white"
+					class="absolute -top-3 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#00a884] text-sm text-white"
 				>
 					{cartCount}
 				</span>

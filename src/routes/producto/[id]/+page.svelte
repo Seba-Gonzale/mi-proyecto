@@ -34,16 +34,16 @@
 				>
 					Enviar mensaje a la empresa
 				</button>
-				<p class="mt-6 text-sm text-[#8696a0]">Info. de la empresa</p>
 			</div>
 			<div class="mt-8">
 				<button
 					onclick={() => addToCart(product)}
 					class="w-full rounded-full bg-[#00a884] py-3 font-semibold text-white transition-colors hover:bg-[#008f6f]"
 				>
-					Añadir a la solicitud de pedido
+					Añadir al pedido
 				</button>
 			</div>
+				<p class="mt-6 text-sm text-[#8696a0]">Info. del producto</p>
 		</div>
 	</div>
 </div>

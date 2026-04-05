@@ -25,23 +25,23 @@
 							class="h-14 w-14 shrink-0 rounded-md object-cover"
 						/>
 						<div class="min-w-0 flex-1">
-							<p class="truncate text-sm text-white">{item.titulo}</p>
+							<p class="truncate text-base text-white">{item.titulo}</p>
 							{#if item.precio_oferta > 0}
-								<p class="text-xs text-[#8696a0] line-through">
-									ARS {item.precio.toLocaleString('es-AR')}
+								<p class="text-sm text-[#8696a0] line-through">
+									$ {item.precio.toLocaleString('es-AR')}
 								</p>
-								<p class="text-sm font-semibold text-[#00a884]">
-									ARS {item.precio_oferta.toLocaleString('es-AR')}
+								<p class="text-base font-semibold text-[#00a884]">
+									$ {item.precio_oferta.toLocaleString('es-AR')}
 								</p>
 							{:else}
-								<p class="text-sm text-[#8696a0]">ARS {item.precio.toLocaleString('es-AR')}</p>
+								<p class="text-base text-[#8696a0]">$ {item.precio.toLocaleString('es-AR')}</p>
 							{/if}
 							<div class="mt-1 flex items-center gap-2">
 								<button
 									onclick={() => updateQuantity(item.id, item.quantity - 1)}
 									class="flex h-8 w-8 items-center justify-center text-2xl text-[#00a884]">−</button
 								>
-								<span class="text-sm text-white">{item.quantity}</span>
+								<span class="text-base text-white">{item.quantity}</span>
 								<button
 									onclick={() => updateQuantity(item.id, item.quantity + 1)}
 									class="flex h-8 w-8 items-center justify-center text-2xl text-[#00a884]">+</button
@@ -50,7 +50,7 @@
 						</div>
 						<button
 							onclick={() => removeFromCart(item.id)}
-							class="flex h-8 w-8 items-center justify-center text-3xl text-[#8696a0] hover:text-red-400"
+							class="flex h-8 w-8 items-center justify-center text-4xl text-[#8696a0] hover:text-red-400"
 							>&times;</button
 						>
 					</div>
@@ -63,7 +63,7 @@
 			<div class="border-t border-[#2a3942] bg-[#1f2c34] p-4">
 				<div class="mb-3 flex justify-between">
 					<span class="text-[#8696a0]">Total</span>
-					<span class="font-bold text-white">ARS {$cartTotal.toLocaleString('es-AR')}</span>
+					<span class="font-bold text-white">$ {$cartTotal.toLocaleString('es-AR')}</span>
 				</div>
 				<button
 					onclick={() => {
@@ -73,7 +73,7 @@
 									`*x${item.quantity} - ${item.titulo}* — _$ ${(item.finalPrice * item.quantity).toLocaleString('es-AR')}_`
 							)
 							.join('\n');
-						const total = `\nTotal: ARS ${$cartTotal.toLocaleString('es-AR')}`;
+						const total = `\nTotal: $ ${$cartTotal.toLocaleString('es-AR')}`;
 						const msg = encodeURIComponent(
 							`Hola! Me gustaría hacer el siguiente pedido:\n\n${lines}${total}`
 						);

@@ -55,7 +55,7 @@
 <SortBar onSort={handleSort} />
 
 <div class="grid grid-cols-1 gap-2 p-2 pb-20 sm:grid-cols-2 lg:grid-cols-3">
-	{#each filtered as product}
+  {#each filtered as product (product.id)}
 		<ProductCard name={product.titulo} price={product.precio} image={product.media} {product} />
 	{:else}
 		<p class="text-[#8696a0] text-center py-8 col-span-3">No se encontraron productos.</p>
