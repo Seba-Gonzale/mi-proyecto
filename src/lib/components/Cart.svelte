@@ -70,7 +70,7 @@
 						const lines = $cart
 							.map(
 								(item) =>
-									`x${item.quantity} - ${item.titulo} — ARS ${(item.finalPrice * item.quantity).toLocaleString('es-AR')}`
+									`*x${item.quantity} - ${item.titulo}* — _$ ${(item.finalPrice * item.quantity).toLocaleString('es-AR')}_`
 							)
 							.join('\n');
 						const total = `\nTotal: ARS ${$cartTotal.toLocaleString('es-AR')}`;
