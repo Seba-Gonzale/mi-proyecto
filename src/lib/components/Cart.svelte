@@ -6,7 +6,7 @@
 
 <div class="fixed inset-0 z-50 flex flex-col">
 	<!-- Overlay -->
-	<button class="absolute inset-0 bg-black/60" onclick={onClose}></button>
+	<button class="absolute inset-0 bg-black/60" onclick={onClose} aria-label="Cerrar carrito"></button>
 
 	<!-- Panel -->
 	<div
@@ -22,7 +22,7 @@
 						<img
 							src={item.media}
 							alt={item.titulo}
-							class="h-14 w-14 flex-shrink-0 rounded-md object-cover"
+							class="h-14 w-14 shrink-0 rounded-md object-cover"
 						/>
 						<div class="min-w-0 flex-1">
 							<p class="truncate text-sm text-white">{item.titulo}</p>

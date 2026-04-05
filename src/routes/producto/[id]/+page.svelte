@@ -2,7 +2,7 @@
 	import { addToCart } from '$lib/stores/cart.js';
 
 	let { data } = $props();
-	const product = data.product;
+	const product = $derived(data.product);
 </script>
 
 <div class="mx-auto flex min-h-screen max-w-5xl flex-col bg-[#111b21] pb-20">

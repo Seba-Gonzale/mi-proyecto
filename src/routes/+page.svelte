@@ -6,14 +6,19 @@
 
 	let { data } = $props();
 
-	const allProducts = Object.values(data.catalog.catalogo);
-	let filtered = $state(allProducts);
+	const allProducts = $derived(Object.values(data.catalog.catalogo));
+	/** @type {any[]} */
+	let filtered = $state([]);
 	let currentSort = $state('default');
 
 	$effect(() => {
 		applyFilters($searchQuery, currentSort);
 	});
 
+	/**
+	 * @param {string} query
+	 * @param {string} sort
+	 */
 	function applyFilters(query, sort) {
 		let result = allProducts.filter((p) =>
 			p.titulo.toLowerCase().includes(query.toLowerCase().trim())
@@ -32,6 +37,7 @@
 		filtered = result;
 	}
 
+	/** @param {string} sort */
 	function handleSort(sort) {
 		currentSort = sort;
 	}

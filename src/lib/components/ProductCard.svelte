@@ -2,7 +2,8 @@
 	import { addToCart, removeFromCart, updateQuantity, cart } from '$lib/stores/cart.js';
 	import { derived } from 'svelte/store';
 
-	let { image = '', name = '', price = 0, product = {} } = $props();
+	/** @type {{ image?: string, name?: string, price?: number, product: { id: string, titulo: string, precio: number, precio_oferta: number, media: string } }} */
+	let { image = '', name = '', price = 0, product } = $props();
 	const hasOffer = $derived(product.precio_oferta > 0);
 
 	const cartItem = derived(cart, ($cart) => $cart.find((i) => i.id === product.id));
@@ -17,7 +18,7 @@
 		src={image}
 		alt={name}
 		loading="lazy"
-		class="h-16 w-16 flex-shrink-0 rounded-lg bg-[#2a3942] object-cover"
+		class="h-16 w-16 shrink-0 rounded-lg bg-[#2a3942] object-cover"
 	/>
 
 	<!-- Texto en el centro -->
@@ -34,7 +35,7 @@
 	</div>
 
 	<!-- Controles a la derecha -->
-	<div class="flex flex-shrink-0 items-center gap-2">
+	<div class="flex shrink-0 items-center gap-2">
 		{#if $cartItem}
 			<button
 				onclick={(e) => {

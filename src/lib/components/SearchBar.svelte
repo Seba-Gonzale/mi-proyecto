@@ -1,9 +1,18 @@
 <script>
 	let { onSearch, searchOpen = $bindable(false) } = $props();
 	let query = $state('');
+	let inputEl = $state(/** @type {HTMLInputElement | null} */ (null));
 
-	function handleInput(e) {
-		query = e.target.value;
+	// Enfocar input cuando searchOpen cambia a true
+	$effect(() => {
+		if (searchOpen && inputEl) {
+			inputEl.focus();
+			inputEl.select();
+		}
+	});
+
+	function handleInput(/** @type {Event & { currentTarget: HTMLInputElement }} */ e) {
+		query = e.currentTarget.value;
 		onSearch(query);
 	}
 
@@ -16,12 +25,12 @@
 
 {#if searchOpen}
 	<div
-		class="sticky top-[52px] z-30 border-b border-[#00a884] bg-[#1f2c34] px-3 py-3 shadow-lg shadow-[#00a884]/20"
+		class="sticky top-13 z-30 border-b border-[#00a884] bg-[#1f2c34] px-3 py-3 shadow-lg shadow-[#00a884]/20"
 	>
 		<div class="flex items-center gap-2 rounded-lg bg-[#2a3942] px-3 py-2">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
-				class="h-5 w-5 flex-shrink-0 text-[#00a884]"
+				class="h-5 w-5 shrink-0 text-[#00a884]"
 				fill="none"
 				viewBox="0 0 24 24"
 				stroke="currentColor"
@@ -39,10 +48,14 @@
 				placeholder="Buscar productos..."
 				value={query}
 				oninput={handleInput}
-				autofocus
+				bind:this={inputEl}
 				class="flex-1 bg-transparent text-sm text-white placeholder-[#8696a0] outline-none"
 			/>
-			<button onclick={clearSearch} class="text-[#8696a0] transition-colors hover:text-white">
+			<button
+				onclick={clearSearch}
+				aria-label="Limpiar búsqueda"
+				class="text-[#8696a0] transition-colors hover:text-white"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-5 w-5"
