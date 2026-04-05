@@ -88,7 +88,7 @@
 
 		<!-- TopBar inferior -->
 		<div
-			class="flex items-center justify-between border-t-2 border-[#00a884] bg-[#1f2c34] px-4 py-3"
+			class="flex items-center justify-between border-t-2 border-[#8696a0] bg-[#1f2c34] px-4 py-3"
 		>
 			<h2 class="text-lg font-semibold text-white">Carrito</h2>
 			<button

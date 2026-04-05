@@ -11,7 +11,7 @@
 
 <a
   href="/producto/{product.id}"
-  class="flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-[#2a3942] {$cartItem ? 'bg-[#1f2c34] border border-[#00a884]' : 'bg-[#1f2c34]'}"
+  class="flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-[#2a3942] bg-[#1f2c34]"
   >
 	<!-- Imagen a la izquierda -->
 	<img
@@ -46,14 +46,35 @@
 			>
 				<span class="text-xl leading-none text-white">−</span>
 			</button>
-			<span class="w-4 text-center text-base font-bold text-white">{$cartItem.quantity}</span>
+			<input
+    type="number"
+    min="1"
+    value={$cartItem.quantity}
+    onclick={(e) => e.preventDefault()}
+    onchange={(e) => {
+        e.preventDefault();
+        const val = parseInt(e.currentTarget.value);
+        if (isNaN(val) || val <= 0) {
+            removeFromCart(product.id);
+        } else {
+            updateQuantity(product.id, val);
+        }
+    }}
+    onkeydown={(e) => {
+        if (e.key === 'Enter') {
+            e.currentTarget.blur();
+        }
+    }}
+    class="w-8 bg-transparent text-center text-base font-bold text-white outline-none"
+/>
 		{/if}
 		<button
 			onclick={(e) => {
 				e.preventDefault();
 				addToCart(product);
 			}}
-			class="flex h-10 w-10 items-center justify-center rounded-lg bg-[#2a3942] transition-colors hover:bg-[#00a884]"		>
+			class="flex h-10 w-10 items-center justify-center rounded-lg transition-colors {$cartItem ? 'bg-[#00a884] hover:bg-[#008f6f]' : 'bg-[#2a3942] hover:bg-[#00a884]'}"
+		>
 			<span class="text-xl leading-none text-white">+</span>
 		</button>
 	</div>

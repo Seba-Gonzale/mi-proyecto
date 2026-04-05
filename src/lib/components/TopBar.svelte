@@ -26,7 +26,7 @@
 </script>
 
 <div
-	class="fixed bottom-0 z-40 flex min-h-15 w-full max-w-5xl items-center justify-between border-t-2 border-[#00a884] bg-[#1f2c34] px-4 py-4"
+	class="fixed bottom-0 z-40 flex min-h-15 w-full max-w-5xl items-center justify-between border-t-2 border-[#8696a0] bg-[#1f2c34] px-4 py-4"
 >
 	{#if searchOpen}
 		<div class="flex flex-1 items-center gap-2">
