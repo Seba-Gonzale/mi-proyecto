@@ -1,6 +1,6 @@
 <script>
 	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
+	import { goto, beforeNavigate, afterNavigate } from '$app/navigation';
 	import { cartCount, cart } from '$lib/stores/cart.js';
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
@@ -10,9 +10,13 @@
 	import '../app.css';
 
 	let { children } = $props();
+	let loading = $state(false);
 
 	const isDetail = $derived($page.url.pathname.startsWith('/producto'));
 	const isCart = $derived($page.url.pathname === '/carrito');
+
+	beforeNavigate(() => { loading = true; });
+	afterNavigate(() => { loading = false; });
 
 	$effect(() => {
     $page.url.pathname;
@@ -31,7 +35,9 @@
 	});
 </script>
 <div class="mx-auto min-h-screen max-w-5xl bg-[#111b21]">
-  <TreeLoad />
+  {#if loading}
+      <TreeLoad />
+  {/if}
 	{@render children()}
 	<TopBar
     cartCount={$cartCount}
