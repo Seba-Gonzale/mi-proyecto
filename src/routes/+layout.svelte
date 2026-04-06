@@ -1,13 +1,13 @@
 <script>
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import { cartCount } from '$lib/stores/cart.js';
-	import searchQuery from '$lib/stores/ui.js';
+	import { cartCount, cart } from '$lib/stores/cart.js';
 	import { onMount } from 'svelte';
-	import TopBar from '$lib/components/TopBar.svelte';
-	import '../app.css';
-	import { cart } from '$lib/stores/cart.js';
 	import { get } from 'svelte/store';
+	import searchQuery from '$lib/stores/ui.js';
+	import TopBar from '$lib/components/TopBar.svelte';
+	import TreeLoad from '$lib/icons/TreeLoad.svelte';
+	import '../app.css';
 
 	let { children } = $props();
 
@@ -31,6 +31,7 @@
 	});
 </script>
 <div class="mx-auto min-h-screen max-w-5xl bg-[#111b21]">
+  <TreeLoad />
 	{@render children()}
 	<TopBar
     cartCount={$cartCount}
@@ -38,5 +39,6 @@
     onHome={() => navigateTo('/')}
     isHome={$page.url.pathname === '/'}
     {isCart}
+    onClearCart={() => { if ($cartCount === 0 || confirm('¿Vaciar el carrito?')) cart.set([]); }}
 />
 </div>
