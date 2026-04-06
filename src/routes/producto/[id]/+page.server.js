@@ -1,9 +1,6 @@
-import { fetchCatalog } from '$lib/stores/catalog.js';
-
-export async function load({ params }) {
-	const data = await fetchCatalog();
-	const products = Object.values(data.catalogo);
-	const product = products.find((p) => p.id === params.id);
-
-	return { product };
+export async function load({ fetch, params }) {
+    const response = await fetch('/api/catalog');
+    const catalog = await response.json();
+    const product = Object.values(catalog.catalogo).find((p) => p.id === params.id);
+    return { product };
 }

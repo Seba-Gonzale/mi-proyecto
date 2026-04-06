@@ -47,26 +47,27 @@
 				<span class="text-xl leading-none text-white">−</span>
 			</button>
 			<input
-    type="number"
-    min="1"
-    value={$cartItem.quantity}
-    onclick={(e) => e.preventDefault()}
-    onchange={(e) => {
-        e.preventDefault();
-        const val = parseInt(e.currentTarget.value);
-        if (isNaN(val) || val <= 0) {
-            removeFromCart(product.id);
-        } else {
-            updateQuantity(product.id, val);
-        }
-    }}
-    onkeydown={(e) => {
-        if (e.key === 'Enter') {
-            e.currentTarget.blur();
-        }
-    }}
-    class="w-8 bg-transparent text-center text-base font-bold text-white outline-none"
-/>
+        type="number"
+        inputmode="numeric"
+        min="1"
+        value={$cartItem.quantity}
+        onclick={(e) => e.preventDefault()}
+        onchange={(e) => {
+            e.preventDefault();
+            const val = parseInt(e.currentTarget.value);
+            if (isNaN(val) || val <= 0) {
+                removeFromCart(product.id);
+            } else {
+                updateQuantity(product.id, val);
+            }
+        }}
+        onkeydown={(e) => {
+            if (e.key === 'Enter') {
+                e.currentTarget.blur();
+            }
+        }}
+        class="w-8 bg-transparent text-center text-base font-bold text-white outline-none"
+    />
 		{/if}
 		<button
 			onclick={(e) => {

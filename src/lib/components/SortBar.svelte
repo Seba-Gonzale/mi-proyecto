@@ -8,17 +8,17 @@
 	}
 </script>
 
-<div class="px-2 py-2">
+<div>
 	<select
 		value={sort}
 		onchange={handleSort}
-		class="w-full cursor-pointer rounded-lg bg-[#2a3942] px-3 py-2 text-base text-[#8696a0] outline-none sm:w-auto"
+		class="w-full cursor-pointer rounded-lg px-3 py-2 text-base outline-none sm:w-auto {sort !== 'default' ? 'bg-amber-500/20 text-amber-400 font-semibold' : 'bg-[#2a3942] text-[#8696a0]'}"
 	>
-		<option value="default">Ordenar</option>
-		<option value="asc">Precio: menor a mayor</option>
-		<option value="desc">Precio: mayor a menor</option>
-		<option value="offers">Solo ofertas</option>
-		<option value="az">Alfabético A-Z</option>
-		<option value="za">Alfabético Z-A</option>
+		<option value="default">Filtros</option>
+		<option value="asc">menor a Mayor $</option>
+		<option value="desc">Mayor a menor $</option>
+		<option value="offers">Ofertas</option>
+		<option value="az">A-Z</option>
+		<option value="za">Z-A</option>
 	</select>
 </div>
