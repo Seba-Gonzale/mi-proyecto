@@ -15,7 +15,8 @@
   let loading = $state(true);
   let inputEl = $state(/** @type {HTMLInputElement | null} */ (null));
   let isFocused = $state(false);
-  let activeHeader = $derived(searchQuery.value === "" && !isFocused);
+  let isFocused2 = $state(false);
+  let activeHeader = $derived(searchQuery.value === "" && !isFocused && !isFocused2);
 
  	$effect(() => {
 		if (data) loading = false;
@@ -85,7 +86,7 @@
         />
         <!-- Icono de busqueda -->
         {#if searchQuery.value !== ""}
-            <button class="cursor-pointer" onmouseup={clearSearch}>
+            <button class="cursor-pointer" onmouseup={() => delay(100).then(clearSearch)}>
                 <Icons name="Close" class="h-5 w-5 text-[#8696a0]" />
             </button>
         {:else}
@@ -94,7 +95,7 @@
     </div>
     <!-- Ordenamiento -->
     <div class="flex-2 min-w-0">
-      <SortBar onSort={handleSort} />
+      <SortBar onSort={handleSort} onFocus={() => isFocused2 ||= true} onBlur={() => delay(100).then(() => (isFocused2 &&= false))}/>
     </div>
 </div>
 <!-- Contenido del catalogo -->
