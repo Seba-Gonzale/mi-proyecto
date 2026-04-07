@@ -1,8 +1,8 @@
 <script>
-	let { storeName = '', description = '', url = '', coverImage = '', activeCatalogHeader } = $props();
+	let { storeName = '', description = '', url = '', coverImage = '', activeHeader } = $props();
 </script>
 
-{#if activeCatalogHeader}
+{#if activeHeader}
   <div class="relative">
   	<!-- Cover image -->
   	<div class="w-full overflow-hidden bg-[#1f2c34]">

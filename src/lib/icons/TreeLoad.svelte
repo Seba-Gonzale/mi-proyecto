@@ -1,5 +1,5 @@
 <div class="fixed inset-0 z-50 flex items-center justify-center bg-[#111b21]/10 backdrop-blur-sm">
-    <img src="/TreeLoad.svg" class="tree-loader w-75 h-75" alt="Cargando..." />
+    <img src="/TreeLoad.svg" width="50%" height="50%" class="tree-loader" alt="Cargando..." />
 </div>
 
 <style>

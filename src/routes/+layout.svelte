@@ -4,7 +4,6 @@
 	import { cartCount, cart } from '$lib/stores/cart.js';
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
-	import searchQuery from '$lib/stores/ui.js';
 	import TopBar from '$lib/components/TopBar.svelte';
 	import TreeLoad from '$lib/icons/TreeLoad.svelte';
 	import '../app.css';
@@ -15,13 +14,13 @@
 	const isDetail = $derived($page.url.pathname.startsWith('/producto'));
 	const isCart = $derived($page.url.pathname === '/carrito');
 
-	beforeNavigate(() => { loading = true; });
+	beforeNavigate((navigation) => {
+    if (!navigation.willUnload) {
+        loading = true;
+    }
+	});
 	afterNavigate(() => { loading = false; });
 
-	$effect(() => {
-    $page.url.pathname;
-    searchQuery.set('');
-	});
 
 	/** @param {string} path */
   function navigateTo(path) {
@@ -34,6 +33,7 @@
     });
 	});
 </script>
+
 <div class="mx-auto min-h-screen max-w-5xl bg-[#111b21]">
   {#if loading}
       <TreeLoad />
