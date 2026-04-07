@@ -2,6 +2,10 @@ import { json } from '@sveltejs/kit';
 import { dev } from '$app/environment';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 
+/** @type {any} */
+let cache = null;
+let cacheTime = 0;
+const CACHE_TTL = 1000 * 60 * 5; // 5 minutos
 const LOCAL_PATH = 'src/lib/data/catalogo.json';
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbx57PCvGNfhRfeQCZahLSM2XowHvhdOf5Lf8kCxO34qnYFGdYJ81GwXEGUz7jrwP_HAIw/exec';
 
@@ -20,8 +24,15 @@ export async function GET() {
         const data = JSON.parse(readFileSync(LOCAL_PATH, 'utf-8'));
         return json(data);
     }
+
+    const now = Date.now();
+    if (cache && now - cacheTime < CACHE_TTL) {
+        return json(cache);
+    }
+
     const data = await fetchFromGAS();
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    cache = data;
+    cacheTime = now;
     return json(data);
 }
 

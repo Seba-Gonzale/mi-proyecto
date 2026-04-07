@@ -1,5 +1,5 @@
 <script>
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { goto, beforeNavigate, afterNavigate } from '$app/navigation';
 	import { cartCount, cart } from '$lib/stores/cart.js';
 	import { onMount } from 'svelte';
@@ -11,8 +11,8 @@
 	let { children } = $props();
 	let loading = $state(false);
 
-	const isDetail = $derived($page.url.pathname.startsWith('/producto'));
-	const isCart = $derived($page.url.pathname === '/carrito');
+	const isDetail = $derived(page.url.pathname.startsWith('/producto'));
+	const isCart = $derived(page.url.pathname === '/carrito');
 
 	beforeNavigate((navigation) => {
     if (!navigation.willUnload) {
@@ -24,7 +24,7 @@
 
 	/** @param {string} path */
   function navigateTo(path) {
-      if ($page.url.pathname !== path) goto(path);
+      if (page.url.pathname !== path) goto(path);
   }
 
 	onMount(() => {
@@ -43,8 +43,8 @@
     cartCount={$cartCount}
     onCartClick={() => navigateTo('/carrito') }
     onHome={() => navigateTo('/')}
-    isHome={$page.url.pathname === '/'}
+    isHome={page.url.pathname === '/'}
     {isCart}
     onClearCart={() => { if ($cartCount === 0 || confirm('¿Vaciar el carrito?')) cart.set([]); }}
-/>
+  />
 </div>
