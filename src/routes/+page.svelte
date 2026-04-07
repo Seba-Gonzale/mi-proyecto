@@ -4,23 +4,22 @@
 	import SortBar from '$lib/components/SortBar.svelte';
 	import TreeLoad from '$lib/icons/TreeLoad.svelte';
 	import Icons from '$lib/icons/Icons.svelte';
-	import { searchQuery } from '$lib/stores/ui.svelte.js';
+	import { searchQuery, currentSort } from '$lib/stores/ui.svelte.js';
 	import { delay } from '$lib/utilities.js';
 
 	let { data } = $props();
 	const allProducts = $derived(Object.values(data.catalogo));
 	/** @type {any[]} */
 	let filtered = $state([]);
-	let currentSort = $state('default');
   let loading = $state(true);
   let inputEl = $state(/** @type {HTMLInputElement | null} */ (null));
   let isFocused = $state(false);
   let isFocused2 = $state(false);
-  let activeHeader = $derived(searchQuery.value === "" && !isFocused && !isFocused2);
+  let activeHeader = $derived(searchQuery.value === "" && !isFocused && !isFocused2 && currentSort.value === 'default');
 
  	$effect(() => {
 		if (data) loading = false;
-		applyFilters(searchQuery.value, currentSort);
+		applyFilters(searchQuery.value, currentSort.value);
 	});
 
   function clearSearch() {
@@ -53,11 +52,6 @@
 			result = result.sort((a, b) => b.titulo.localeCompare(a.titulo));
 		}
 		filtered = result;
-	}
-
-	/** @param {string} sort */
-	function handleSort(sort) {
-		currentSort = sort;
 	}
 </script>
 
@@ -95,7 +89,7 @@
     </div>
     <!-- Ordenamiento -->
     <div class="flex-2 min-w-0">
-      <SortBar onSort={handleSort} onFocus={() => isFocused2 ||= true} onBlur={() => delay(100).then(() => (isFocused2 &&= false))}/>
+      <SortBar onFocus={() => isFocused2 ||= true} onBlur={() => delay(100).then(() => (isFocused2 &&= false))}/>
     </div>
 </div>
 <!-- Contenido del catalogo -->

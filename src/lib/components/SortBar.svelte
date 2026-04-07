@@ -1,20 +1,19 @@
 <script>
-	let { onSort, onFocus, onBlur } = $props();
-	let sort = $state('default');
+  import { currentSort } from '$lib/stores/ui.svelte';
+	let { onFocus, onBlur } = $props();
 
 	function handleSort(e) {
-		sort = e.target.value;
-		onSort(sort);
+		currentSort.value = e.target.value;
 	}
 </script>
 
 
 <select
-	value={sort}
+	bind:value={currentSort.value}
 	onchange={handleSort}
 	onfocus={onFocus}
 	onblur={onBlur}
-	class="w-full cursor-pointer rounded-lg px-3 py-2 text-base outline-none sm:w-auto {sort !== 'default' ? 'bg-amber-500/20 text-amber-400 font-semibold' : 'bg-[#2a3942] text-[#8696a0]'}"
+	class="w-full cursor-pointer rounded-lg px-3 py-2 text-base outline-none sm:w-auto {currentSort.value !== 'default' ? 'bg-amber-500/20 text-amber-400 font-semibold' : 'bg-[#2a3942] text-[#8696a0]'}"
 >
 	<option value="default">Filtros</option>
 	<option value="asc">menor a Mayor $</option>

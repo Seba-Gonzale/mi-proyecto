@@ -2,7 +2,7 @@
 	import ProductCard from '$lib/components/ProductCard.svelte';
 	import { cart, cartTotal } from '$lib/stores/cart.js';
 	let { data } = $props();
-	const allProducts = $derived(Object.values(data.catalog.catalogo));
+	const allProducts = $derived(Object.values(data.catalogo));
 	const cartProducts = $derived(
 		$cart.map((item) => allProducts.find((p) => p.id === item.id)).filter(Boolean)
 	);
@@ -25,7 +25,7 @@
 		</div>
 		<button
 			onclick={() => {
-				const lines = $cart.map((item) => `*x${item.quantity} - ${item.titulo}* — _$ ${(item.finalPrice * item.quantity).toLocaleString('es-AR')}_`).join('\n');
+				const lines = $cart.map((item) => `*x${item.quantity}* - ${item.titulo} — _$ ${(item.finalPrice * item.quantity).toLocaleString('es-AR')}_`).join('\n');
 				const total = `\nTotal: $ ${$cartTotal.toLocaleString('es-AR')}`;
 				const msg = encodeURIComponent(`Hola! Me gustaría hacer el siguiente pedido:\n\n${lines}${total}`);
 				window.open(`https://wa.me/5493794229358?text=${msg}`, '_blank');

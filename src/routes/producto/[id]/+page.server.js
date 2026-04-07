@@ -1,6 +1,7 @@
-export async function load({ fetch, params }) {
-    const response = await fetch('/api/catalog');
-    const catalog = await response.json();
-    const product = Object.values(catalog.catalogo).find((p) => p.id === params.id);
+import { getCatalog } from '$lib/catalog.js';
+
+export async function load({ params }) {
+    const { catalogo } = await getCatalog();
+    const product = Object.values(catalogo).find((p) => p.id === params.id);
     return { product };
 }

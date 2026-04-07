@@ -1,5 +1,6 @@
-export async function load({ fetch }) {
-    const response = await fetch('/api/catalog');
-  const { catalogo } = await response.json();
+import { getCatalog } from '$lib/catalog.js';
+
+export async function load() {
+    const { catalogo } = await getCatalog();
     return { catalogo };
 }
